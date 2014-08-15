@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import javax.websocket.EncodeException;
 import javax.websocket.Session;
 
 public class WebLogOutputStream extends OutputStream {
@@ -48,7 +49,12 @@ public class WebLogOutputStream extends OutputStream {
 				}
 				catch (InterruptedException e) {
 					done = true;
-					System.err.println(e);
+					try {
+						session.getBasicRemote().sendObject(e);
+					}
+					catch (IOException | EncodeException e1) {
+						e1.printStackTrace();
+					}
 				}
 			}
 		}

@@ -52,7 +52,36 @@ public class AsyncQueueOutputStream extends OutputStream {
 	 * 发送消息的线程 将消息广播到每个socket会话
 	 */
 
-	private Runnable sendMessageThread = new Runnable() {
+	private MessageThread sendMessageThread = new MessageThread();
+
+	public void flush() throws IOException {
+	}
+
+	@Override
+	public void write(byte[] bytes, int off, int len) throws IOException {
+		if (sendMessageThread.isInterrupted()) {
+			sendMessageThread=new MessageThread();
+		}
+		String log = new String(bytes, off, len);
+		try {
+			this.MESSAGE_QUEUE.put(log);
+		}
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void close() throws IOException {
+		this.executor.shutdown();
+		for (Session session : SESSION_QUEUE) {
+			session.close();
+		}
+
+	}
+	
+	private class MessageThread implements Runnable{
+	private 	boolean interrupted=false;
 		@Override
 		public void run() {
 			boolean done = false;
@@ -71,32 +100,13 @@ public class AsyncQueueOutputStream extends OutputStream {
 				}
 				catch (InterruptedException e) {
 					done = true;
-					System.err.println(e);
+					interrupted=true;
+					(e).printStackTrace();
 				}
 			}
 		}
-	};
-
-	public void flush() throws IOException {
-	}
-
-	@Override
-	public void write(byte[] bytes, int off, int len) throws IOException {
-		String log = new String(bytes, off, len);
-		try {
-			this.MESSAGE_QUEUE.put(log);
+		public boolean isInterrupted(){
+			return interrupted;
 		}
-		catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void close() throws IOException {
-		this.executor.shutdown();
-		for (Session session : SESSION_QUEUE) {
-			session.close();
-		}
-
 	}
 }

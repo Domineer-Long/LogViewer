@@ -7,7 +7,6 @@ import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import javax.websocket.server.ServerEndpoint;
 
 import me.log.demo.AsyncQueueOutputStream;
 import me.log.demo.processor.MessageProcessor;
@@ -16,7 +15,7 @@ import me.log.demo.processor.ProcessorSelector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@ServerEndpoint(value = "/viewer/log1")
+//@ServerEndpoint(value = "/viewer/log1")
 public class LogViewerWebSocketServer {
 	private Session session;
 
