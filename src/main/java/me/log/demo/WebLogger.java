@@ -59,11 +59,11 @@ public class WebLogger {
 	}
 
 	public void pause() {
-		outputStream.setPause(true);
+		outputStream.pause();
 	}
 
 	public void resume() {
-		outputStream.setPause(false);
+		outputStream.pause();
 	}
 
 	public void close() {

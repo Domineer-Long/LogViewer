@@ -73,19 +73,19 @@ public class AsyncQueueOutputStream extends OutputStream {
 
 	@Override
 	public void close() throws IOException {
+		this.sendMessageThread.setDone(true);
 		this.executor.shutdown();
 		for (Session session : SESSION_QUEUE) {
 			session.close();
 		}
-
 	}
 	
 	private class MessageThread implements Runnable{
-	private 	boolean interrupted=false;
+		private boolean interrupted=false;
+		private	boolean done = false;
 		@Override
 		public void run() {
-			boolean done = false;
-			while (!done) {
+			while (!isDone()) {
 				try {
 					String message = MESSAGE_QUEUE.take();
 					for (Session session : SESSION_QUEUE) {
@@ -101,12 +101,17 @@ public class AsyncQueueOutputStream extends OutputStream {
 				catch (InterruptedException e) {
 					done = true;
 					interrupted=true;
-					(e).printStackTrace();
 				}
 			}
 		}
 		public boolean isInterrupted(){
 			return interrupted;
+		}
+		public boolean isDone() {
+			return done;
+		}
+		public void setDone(boolean done) {
+			this.done = done;
 		}
 	}
 }

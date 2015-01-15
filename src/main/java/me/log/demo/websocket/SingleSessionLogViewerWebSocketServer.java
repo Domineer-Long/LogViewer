@@ -7,7 +7,6 @@ import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import javax.websocket.server.ServerEndpoint;
 
 import me.log.demo.WebLogger;
 import me.log.demo.processor.MessageProcessor;
@@ -15,7 +14,7 @@ import me.log.demo.processor.ProcessorSelector;
 
 import org.slf4j.Logger;
 
-@ServerEndpoint(value = "/viewer/log")
+//@ServerEndpoint(value = "/viewer/log")
 public class SingleSessionLogViewerWebSocketServer {
 
 	private Logger logger;

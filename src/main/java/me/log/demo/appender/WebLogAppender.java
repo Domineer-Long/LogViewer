@@ -31,9 +31,9 @@ public class WebLogAppender<E> extends OutputStreamAppender<E> {
 	public void setEncoder(Encoder<E> encoder) {
 		super.setEncoder(encoder);
 		if (os == null)
-			this.setOutputStream(new AsyncQueueOutputStream());
-		else
-			this.setOutputStream(os);
+			os = new AsyncQueueOutputStream();
+		this.setOutputStream(os);
 	}
+
 
 }

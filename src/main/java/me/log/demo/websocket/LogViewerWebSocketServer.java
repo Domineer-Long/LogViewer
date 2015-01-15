@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 //@ServerEndpoint(value = "/viewer/log1")
-public class LogViewerWebSocketServer {
+public class LogViewerWebSocketServer extends WebSocketServer{
 	private Session session;
 
 	private static final Logger logger = LoggerFactory.getLogger("weblog");
@@ -74,5 +74,11 @@ public class LogViewerWebSocketServer {
 			}
 		}
 		logger.debug(message);
+	}
+
+	@Override
+	public void onMessage(String message, boolean part) {
+		// TODO Auto-generated method stub
+		
 	}
 }
