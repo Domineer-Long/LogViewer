@@ -1,10 +1,10 @@
-package me.log.demo;
+package me.log.web;
 
 import java.io.IOException;
 
 import javax.websocket.Session;
 
-import me.log.demo.appender.WebLogAppender;
+import me.log.web.appender.WebLogAppender;
 
 import org.slf4j.LoggerFactory;
 

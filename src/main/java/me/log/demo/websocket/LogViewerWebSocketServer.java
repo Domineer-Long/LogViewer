@@ -10,11 +10,12 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import me.log.demo.MessageSender;
-import me.log.demo.WebLogOutputStream;
-import me.log.demo.appender.WebLogAppender;
-import me.log.demo.processor.MessageProcessor;
-import me.log.demo.processor.ProcessorSelector;
+import me.log.web.MessageSender;
+import me.log.web.WebLogOutputStream;
+import me.log.web.appender.WebLogAppender;
+import me.log.web.processor.MessageProcessor;
+import me.log.web.processor.ProcessorSelector;
+import me.log.web.websocket.WebSocketServer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

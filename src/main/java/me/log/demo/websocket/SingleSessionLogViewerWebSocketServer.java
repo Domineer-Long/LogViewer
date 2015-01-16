@@ -8,9 +8,9 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 
-import me.log.demo.WebLogger;
-import me.log.demo.processor.MessageProcessor;
-import me.log.demo.processor.ProcessorSelector;
+import me.log.web.WebLogger;
+import me.log.web.processor.MessageProcessor;
+import me.log.web.processor.ProcessorSelector;
 
 import org.slf4j.Logger;
 

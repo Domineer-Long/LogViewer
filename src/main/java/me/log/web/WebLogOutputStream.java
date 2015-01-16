@@ -1,4 +1,4 @@
-package me.log.demo;
+package me.log.web;
 
 import java.io.IOException;
 import java.io.OutputStream;
