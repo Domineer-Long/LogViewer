@@ -2,7 +2,6 @@ package me.log.demo.appender;
 
 import java.io.OutputStream;
 
-import me.log.demo.AsyncQueueOutputStream;
 import ch.qos.logback.core.OutputStreamAppender;
 import ch.qos.logback.core.encoder.Encoder;
 
@@ -30,10 +29,7 @@ public class WebLogAppender<E> extends OutputStreamAppender<E> {
 	@Override
 	public void setEncoder(Encoder<E> encoder) {
 		super.setEncoder(encoder);
-		if (os == null)
-			os = new AsyncQueueOutputStream();
-		this.setOutputStream(os);
+		if (os != null)
+			this.setOutputStream(os);
 	}
-
-
 }

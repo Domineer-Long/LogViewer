@@ -63,7 +63,7 @@ public class WebLogger {
 	}
 
 	public void resume() {
-		outputStream.pause();
+		outputStream.resume();
 	}
 
 	public void close() {

@@ -21,6 +21,9 @@ public class WebLogOutputStream extends OutputStream {
 	public WebLogOutputStream() {
 		messageSender = new MessageSender();
 	}
+	public WebLogOutputStream(MessageSender messageSender) {
+		this.messageSender = messageSender;
+	}
 	
 	private boolean pause = false;
 
@@ -47,5 +50,8 @@ public class WebLogOutputStream extends OutputStream {
 
 	public void pause() {
 		this.pause = true;
+	}
+	public void resume() {
+		this.pause = false;
 	}
 }

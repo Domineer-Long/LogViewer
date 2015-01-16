@@ -2,9 +2,7 @@ package me.log.demo.processor;
 
 import javax.websocket.Session;
 
-import me.log.demo.AsyncQueueOutputStream;
 import me.log.demo.WebLogger;
-import me.log.demo.appender.WebLogManager;
 
 /**
  * 暂停指令的消息处理器
@@ -18,8 +16,6 @@ public class PauseMessageProcessor implements MessageProcessor {
 
 	@Override
 	public void process(Session session) {
-		if (AsyncQueueOutputStream.SESSION_QUEUE.contains(session))
-			AsyncQueueOutputStream.SESSION_QUEUE.remove(session);
 	}
 
 	@Override
