@@ -12,44 +12,50 @@ import java.util.concurrent.LinkedBlockingQueue;
 import javax.websocket.Session;
 
 public class MessageSender implements Runnable {
-	
-	private BlockingQueue<String > messageQueue=new LinkedBlockingQueue<String>();
+
+	private BlockingQueue<String> messageQueue = new LinkedBlockingQueue<String>();
 	private ExecutorService executorService;
 	private Queue<Session> sessionsQueue = new ConcurrentLinkedDeque<>();
+	private boolean pause = false;
+
 	public MessageSender(Session session) {
 		sessionsQueue.add(session);
 		executorService = Executors.newSingleThreadExecutor();
 		executorService.execute(this);
 	}
+
 	public MessageSender(Collection<Session> sessions) {
 		sessionsQueue.addAll(sessions);
 		executorService = Executors.newSingleThreadExecutor();
 		executorService.execute(this);
 	}
-	
+
 	public MessageSender() {
 		executorService = Executors.newSingleThreadExecutor();
 		executorService.execute(this);
 	}
-	
-	public MessageSender(Collection<Session> sessions,ExecutorService executorService) {
+
+	public MessageSender(Collection<Session> sessions,
+			ExecutorService executorService) {
 		sessionsQueue.addAll(sessions);
 		executorService.execute(this);
 	}
-	
-	public void addSession(Session session){
+
+	public void addSession(Session session) {
 		sessionsQueue.add(session);
 	}
-	public void removeSession(Session session){
+
+	public void removeSession(Session session) {
 		sessionsQueue.remove(session);
 	}
-	public void addAllSession(Collection<Session> sessions){
+
+	public void addAllSession(Collection<Session> sessions) {
 		sessionsQueue.addAll(sessions);
 	}
 
 	private boolean interrupted = false;
 	private boolean done = false;
-	
+
 	/**
 	 * 将消息广播到webSocket会话
 	 */
@@ -89,13 +95,29 @@ public class MessageSender implements Runnable {
 		sessionsQueue.clear();
 		messageQueue.clear();
 	}
-	
-	public void putMessage(String message){
-		try {
-			messageQueue.put(message);
-		} catch (InterruptedException e) {
-			close();
-			interrupted=true;
+
+	public void putMessage(byte[] bytes, int off, int len) {
+		if (!pause) {
+			putMessage(new String(bytes, off, len));
 		}
+	}
+
+	public void putMessage(String message) {
+		if (!pause) {
+			try {
+				messageQueue.put(message);
+			} catch (InterruptedException e) {
+				close();
+				interrupted = true;
+			}
+		}
+	}
+
+	public void pause() {
+		this.pause = true;
+	}
+
+	public void resume() {
+		this.pause = false;
 	}
 }

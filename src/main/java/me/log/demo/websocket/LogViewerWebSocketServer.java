@@ -31,7 +31,6 @@ import ch.qos.logback.core.Appender;
  */
 @ServerEndpoint(value = "/viewer/log")
 public class LogViewerWebSocketServer extends WebSocketServer {
-	private Session session;
 
 	private static final Logger logger = LoggerFactory.getLogger("_weblog_");
 	private static Appender<ILoggingEvent>  appender;
@@ -45,7 +44,6 @@ public class LogViewerWebSocketServer extends WebSocketServer {
 
 	@OnOpen
 	public void onOpen(Session session) {
-		this.session = session;
 		logger.info("有一个客户端已连接 【{}】", session.getId());
 		if (appender==null) {
 			appender=new WebLogAppender<ILoggingEvent>(new WebLogOutputStream(messageSender));
@@ -90,7 +88,7 @@ public class LogViewerWebSocketServer extends WebSocketServer {
 		if (null != message) {
 			MessageProcessor processor = ProcessorSelector.getProcessor(message);
 			if (null != processor) {
-				processor.process(session);
+				processor.process(messageSender);
 				return;
 			}
 		}

@@ -8,7 +8,7 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 
-import me.log.web.WebLogger;
+import me.log.demo.WebLogger;
 import me.log.web.processor.MessageProcessor;
 import me.log.web.processor.ProcessorSelector;
 
@@ -67,7 +67,7 @@ public class SingleSessionLogViewerWebSocketServer {
 		if (null != message) {
 			MessageProcessor processor = ProcessorSelector.getProcessor(message);
 			if (null != processor) {
-				processor.process(webLogger);
+//				processor.process(webLogger);
 				return;
 			}
 		}

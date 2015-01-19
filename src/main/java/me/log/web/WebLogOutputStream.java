@@ -25,8 +25,6 @@ public class WebLogOutputStream extends OutputStream {
 		this.messageSender = messageSender;
 	}
 	
-	private boolean pause = false;
-
 
 	@Override
 	public void write(int b) throws IOException {
@@ -38,9 +36,7 @@ public class WebLogOutputStream extends OutputStream {
 
 	@Override
 	public void write(byte[] bytes, int off, int len) throws IOException {
-		if (!pause) {
-			messageSender.putMessage(new String(bytes, off, len));
-		}
+			messageSender.putMessage(bytes, off, len);
 	}
 
 	@Override
@@ -49,9 +45,9 @@ public class WebLogOutputStream extends OutputStream {
 	}
 
 	public void pause() {
-		this.pause = true;
+		messageSender.pause();
 	}
 	public void resume() {
-		this.pause = false;
+		messageSender.resume();
 	}
 }

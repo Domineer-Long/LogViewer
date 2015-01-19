@@ -5,8 +5,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.websocket.Session;
 
+import me.log.demo.WebLogger;
 import me.log.web.WebLogOutputStream;
-import me.log.web.WebLogger;
 
 import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;

@@ -1,9 +1,6 @@
 package me.log.web.processor;
 
-import javax.websocket.Session;
-
 import me.log.web.MessageSender;
-import me.log.web.WebLogger;
 
 /**
  * 重新开始指令的消息处理器
@@ -16,17 +13,7 @@ import me.log.web.WebLogger;
 public class ResumeMessageProcessor implements MessageProcessor {
 
 	@Override
-	public void process(Session session) {
-	}
-
-	@Override
-	public void process(WebLogger webLogger) {
-		webLogger.resume();
-	}
-
-	@Override
 	public void process(MessageSender messageSender) {
-		// TODO Auto-generated method stub
-
+		messageSender.resume();
 	}
 }
