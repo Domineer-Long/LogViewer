@@ -1,6 +1,7 @@
 package me.log.web.processor;
 
 import me.log.web.MessageSender;
+import me.log.web.WebLogOutputStream;
 
 /**
  * 暂停指令的消息处理器
@@ -18,4 +19,7 @@ public class PauseMessageProcessor implements MessageProcessor {
 		messageSender.pause();
 	}
 
+	public void process(WebLogOutputStream outputStream) {
+		outputStream.pause();
+	}
 }

@@ -18,9 +18,6 @@ public class WebLogOutputStream extends OutputStream {
 		messageSender = new MessageSender(session);
 	}
 	
-	public WebLogOutputStream() {
-		messageSender = new MessageSender();
-	}
 	public WebLogOutputStream(MessageSender messageSender) {
 		this.messageSender = messageSender;
 	}

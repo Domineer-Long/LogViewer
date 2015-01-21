@@ -1,6 +1,7 @@
 package me.log.web.processor;
 
 import me.log.web.MessageSender;
+import me.log.web.WebLogOutputStream;
 
 /**
  * 消息处理器接口
@@ -12,6 +13,8 @@ import me.log.web.MessageSender;
  */
 
 public interface MessageProcessor {
-	
+
 	void process(MessageSender messageSender);
+
+	void process(WebLogOutputStream outputStream);
 }

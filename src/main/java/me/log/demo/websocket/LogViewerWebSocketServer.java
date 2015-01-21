@@ -8,7 +8,6 @@ import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import javax.websocket.server.ServerEndpoint;
 
 import me.log.web.MessageSender;
 import me.log.web.WebLogOutputStream;
@@ -20,8 +19,10 @@ import me.log.web.websocket.WebSocketServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.Appender;
+import ch.qos.logback.core.Context;
 
 /**
  * 全局日志查看器
@@ -29,7 +30,7 @@ import ch.qos.logback.core.Appender;
  * @author Ma Long
  *
  */
-@ServerEndpoint(value = "/viewer/log")
+//@ServerEndpoint(value = "/viewer/log")
 public class LogViewerWebSocketServer extends WebSocketServer {
 
 	private static final Logger logger = LoggerFactory.getLogger("_weblog_");
@@ -46,8 +47,13 @@ public class LogViewerWebSocketServer extends WebSocketServer {
 	public void onOpen(Session session) {
 		logger.info("有一个客户端已连接 【{}】", session.getId());
 		if (appender==null) {
+			PatternLayoutEncoder encoder=new PatternLayoutEncoder();
+			encoder.setPattern("%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level-%logger{50} - %msg%n");
 			appender=new WebLogAppender<ILoggingEvent>(new WebLogOutputStream(messageSender));
+			((WebLogAppender<ILoggingEvent>) appender).setEncoder(encoder);
+			appender.setContext((Context)LoggerFactory.getILoggerFactory());
 			((ch.qos.logback.classic.Logger)logger).addAppender(appender);
+			appender.start();
 		}
 		messageSender.addSession(session);
 	}
