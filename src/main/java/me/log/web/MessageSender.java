@@ -17,6 +17,8 @@ public class MessageSender implements Runnable {
 	private ExecutorService executorService;
 	private Queue<Session> sessionsQueue = new ConcurrentLinkedDeque<>();
 	private boolean pause = false;
+	
+	private  final String shutDownMessage=new String("");
 
 	public MessageSender(Session session) {
 		sessionsQueue.add(session);
@@ -61,7 +63,7 @@ public class MessageSender implements Runnable {
 	 */
 	@Override
 	public void run() {
-		while (!isDone()) {
+		while (!done) {
 			try {
 				String message = messageQueue.take();
 				for (Session session : sessionsQueue) {
@@ -84,6 +86,7 @@ public class MessageSender implements Runnable {
 
 	public void close() {
 		this.done = true;
+		messageQueue.add(shutDownMessage);
 		executorService.shutdown();
 		for (Session session : sessionsQueue) {
 			try {
@@ -94,6 +97,7 @@ public class MessageSender implements Runnable {
 		}
 		sessionsQueue.clear();
 		messageQueue.clear();
+		sessionsQueue=null;
 	}
 
 	public void putMessage(byte[] bytes, int off, int len) {

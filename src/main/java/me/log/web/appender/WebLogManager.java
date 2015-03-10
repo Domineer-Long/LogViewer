@@ -58,7 +58,7 @@ public class WebLogManager {
 		return appender;
 	}
 
-	public Logger createLoggerWithAppender(Session session) {
+	public org.slf4j.Logger createLoggerWithAppender(Session session) {
 		String loggerName = "logger_webLog_" + session.getId();
 		Logger logger = (Logger) LoggerFactory.getLogger(loggerName);
 		logger.setLevel(Level.DEBUG);
@@ -66,7 +66,7 @@ public class WebLogManager {
 		return logger;
 	}
 	
-	public Logger createWebLogger(Session session){
+	public org.slf4j.Logger createWebLogger(Session session){
 		WebLogger logger=new WebLogger(session);
 		return logger.getLogger();
 	}
