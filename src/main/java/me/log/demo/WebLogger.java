@@ -43,7 +43,7 @@ public class WebLogger {
 	}
 
 	public WebLogAppender<ILoggingEvent> createWebLoggerAppender(String pattern) {
-		WebLogAppender<ILoggingEvent> appender = new WebLogAppender<>(this.outputStream);
+		WebLogAppender<ILoggingEvent> appender = new WebLogAppender<ILoggingEvent>(this.outputStream);
 		PatternLayoutEncoder encoder = new PatternLayoutEncoder();
 		encoder.setContext((LoggerContext) LoggerFactory.getILoggerFactory());
 		if (pattern == null || pattern.replaceAll("\\s", "").length() == 0)

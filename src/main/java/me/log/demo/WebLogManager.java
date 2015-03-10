@@ -1,12 +1,12 @@
-package me.log.web.appender;
+package me.log.demo;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.websocket.Session;
 
-import me.log.demo.WebLogger;
 import me.log.web.WebLogOutputStream;
+import me.log.web.appender.WebLogAppender;
 
 import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,7 @@ public class WebLogManager {
 		private static final WebLogManager WEB_LOG_MANAGER = new WebLogManager();
 	}
 
-	private Map<String, Appender<ILoggingEvent>> appenderMap = new ConcurrentHashMap<>();
+	private Map<String, Appender<ILoggingEvent>> appenderMap = new ConcurrentHashMap<String, Appender<ILoggingEvent>>();
 
 	private WebLogManager() {
 	}
@@ -41,7 +41,7 @@ public class WebLogManager {
 	}
 
 	public WebLogAppender<ILoggingEvent> createWebLogAppender(Session session, String pattern) {
-		WebLogAppender<ILoggingEvent> appender = new WebLogAppender<>(new WebLogOutputStream(session));
+		WebLogAppender<ILoggingEvent> appender = new WebLogAppender<ILoggingEvent>(new WebLogOutputStream(session));
 		PatternLayoutEncoder encoder = new PatternLayoutEncoder();
 		encoder.setContext((LoggerContext) iLoggerFactory);
 		if (pattern == null || pattern.replaceAll("\\s", "").length() == 0)
