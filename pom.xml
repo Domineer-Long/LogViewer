@@ -4,7 +4,7 @@
 	<groupId>me.log</groupId>
 	<artifactId>logviewer</artifactId>
 	<packaging>jar</packaging>
-	<version>1.1</version>
+	<version>1.1-SNAPSHOT</version>
 	<name>logviewer</name>
 	<distributionManagement>
 		<snapshotRepository>
