@@ -1,4 +1,4 @@
 LogViewer
 ===
 
-private of me
+Synchronous display the log in the web page
